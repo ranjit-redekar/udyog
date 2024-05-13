@@ -1,71 +1,70 @@
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/components/ui/avatar"
+import React from "react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+
+interface RecentSale {
+  name: string;
+  email: string;
+  amount: number;
+  avatarSrc?: string; // Optional avatar image source
+}
+
+function RecentSaleItem({ data }: { data: RecentSale }) {
+  const { name, email, amount, avatarSrc } = data;
+
+  return (
+    <div className="flex items-center">
+      <Avatar className="h-9 w-9">
+        {avatarSrc && <AvatarImage src={avatarSrc} alt="Avatar" />}
+        <AvatarFallback>{name.slice(0, 2).toUpperCase()}</AvatarFallback>
+      </Avatar>
+      <div className="ml-4 space-y-1">
+        <p className="text-sm font-medium leading-none">{name}</p>
+        <p className="text-sm text-muted-foreground">{email}</p>
+      </div>
+      <div className="ml-auto font-medium">+{amount.toFixed(2)}</div>
+    </div>
+  );
+}
 
 export function RecentSales() {
+  const salesData: RecentSale[] = [
+    {
+      name: "Olivia Martin",
+      email: "olivia.martin@email.com",
+      amount: 1999,
+      avatarSrc: "/avatars/01.png",
+    },
+    {
+      name: "Jackson Lee",
+      email: "jackson.lee@email.com",
+      amount: 39,
+      avatarSrc: "/avatars/02.png",
+    },
+    {
+      name: "Isabella Nguyen",
+      email: "isabella.nguyen@email.com",
+      amount: 299,
+      avatarSrc: "/avatars/03.png",
+    },
+    {
+      name: "William Kim",
+      email: "will@email.com",
+      amount: 99,
+      avatarSrc: "/avatars/04.png",
+    },
+    {
+      name: "Sofia Davis",
+      email: "sofia.davis@email.com",
+      amount: 39,
+      avatarSrc: "/avatars/05.png",
+    }
+  ];
+
   return (
     <div className="space-y-8">
-      <div className="flex items-center">
-        <Avatar className="h-9 w-9">
-          <AvatarImage src="/avatars/01.png" alt="Avatar" />
-          <AvatarFallback>OM</AvatarFallback>
-        </Avatar>
-        <div className="ml-4 space-y-1">
-          <p className="text-sm font-medium leading-none">Olivia Martin</p>
-          <p className="text-sm text-muted-foreground">
-            olivia.martin@email.com
-          </p>
-        </div>
-        <div className="ml-auto font-medium">+$1,999.00</div>
-      </div>
-      <div className="flex items-center">
-        <Avatar className="flex h-9 w-9 items-center justify-center space-y-0 border">
-          <AvatarImage src="/avatars/02.png" alt="Avatar" />
-          <AvatarFallback>JL</AvatarFallback>
-        </Avatar>
-        <div className="ml-4 space-y-1">
-          <p className="text-sm font-medium leading-none">Jackson Lee</p>
-          <p className="text-sm text-muted-foreground">jackson.lee@email.com</p>
-        </div>
-        <div className="ml-auto font-medium">+$39.00</div>
-      </div>
-      <div className="flex items-center">
-        <Avatar className="h-9 w-9">
-          <AvatarImage src="/avatars/03.png" alt="Avatar" />
-          <AvatarFallback>IN</AvatarFallback>
-        </Avatar>
-        <div className="ml-4 space-y-1">
-          <p className="text-sm font-medium leading-none">Isabella Nguyen</p>
-          <p className="text-sm text-muted-foreground">
-            isabella.nguyen@email.com
-          </p>
-        </div>
-        <div className="ml-auto font-medium">+$299.00</div>
-      </div>
-      <div className="flex items-center">
-        <Avatar className="h-9 w-9">
-          <AvatarImage src="/avatars/04.png" alt="Avatar" />
-          <AvatarFallback>WK</AvatarFallback>
-        </Avatar>
-        <div className="ml-4 space-y-1">
-          <p className="text-sm font-medium leading-none">William Kim</p>
-          <p className="text-sm text-muted-foreground">will@email.com</p>
-        </div>
-        <div className="ml-auto font-medium">+$99.00</div>
-      </div>
-      <div className="flex items-center">
-        <Avatar className="h-9 w-9">
-          <AvatarImage src="/avatars/05.png" alt="Avatar" />
-          <AvatarFallback>SD</AvatarFallback>
-        </Avatar>
-        <div className="ml-4 space-y-1">
-          <p className="text-sm font-medium leading-none">Sofia Davis</p>
-          <p className="text-sm text-muted-foreground">sofia.davis@email.com</p>
-        </div>
-        <div className="ml-auto font-medium">+$39.00</div>
-      </div>
+      {salesData.map((sale) => (
+        <RecentSaleItem key={sale.name} data={sale} />
+      ))}
     </div>
-  )
+  );
 }

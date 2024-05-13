@@ -2,7 +2,7 @@
 import React from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-export default function Settings() {
+export default function page() {
   return (
     <div>
       <Tabs defaultValue="customers" className="w-[400px]">
@@ -12,10 +12,10 @@ export default function Settings() {
           <TabsTrigger value="both">Both</TabsTrigger>
         </TabsList>
         <TabsContent value="customers">
-          Make changes to your customer here.
+          Customer List.
         </TabsContent>
-        <TabsContent value="suppliers">Change your supplier here.</TabsContent>
-        <TabsContent value="both">Change your Both here.</TabsContent>
+        <TabsContent value="suppliers">Supplier List.</TabsContent>
+        <TabsContent value="both">Both here.</TabsContent>
       </Tabs>
     </div>
   );

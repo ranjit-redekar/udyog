@@ -1,16 +1,12 @@
+"use client"
 import Link from "next/link";
 import {
-  Activity,
-  ArrowUpRight,
   CircleUser,
-  CreditCard,
-  DollarSign,
   Menu,
   Package2,
   Search,
-  Users,
 } from "lucide-react";
-
+import { useSession } from 'next-auth/react'
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -31,74 +27,61 @@ import {
   MenubarShortcut,
   MenubarTrigger,
 } from "@/components/ui/menubar";
-import {
-  navigationMenuTriggerStyle,
-  NavigationMenuItem,
-  NavigationMenuLink,
-} from "@/components/ui/navigation-menu";
-
-import { cn } from "@/lib/utils";
+import { signOut } from "next-auth/react";
 
 export function MainNav({
   className,
   ...props
 }: React.HTMLAttributes<HTMLElement>) {
+  const session = useSession();
   return (
     <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
-      {/* <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
-          <Link
-            href="#"
-            className="flex items-center gap-2 text-lg font-semibold md:text-base"
-          >
-            <Package2 className="h-6 w-6" />
-            <span className="sr-only">Acme Inc</span>
-          </Link>
-          <Link
-            href="#"
-            className="text-foreground transition-colors hover:text-foreground"
-          >
-            Dashboard
-          </Link>
-          <Link
-            href="#"
-            className="text-muted-foreground transition-colors hover:text-foreground"
-          >
-            Orders
-          </Link>
-          <Link
-            href="#"
-            className="text-muted-foreground transition-colors hover:text-foreground"
-          >
-            Products
-          </Link>
-          <Link
-            href="#"
-            className="text-muted-foreground transition-colors hover:text-foreground"
-          >
-            Customers
-          </Link>
-          <Link
-            href="#"
-            className="text-muted-foreground transition-colors hover:text-foreground"
-          >
-            Analytics
-          </Link>
-        </nav> */}
-      <Menubar>
-        <MenubarMenu>
-          <MenubarTrigger>File</MenubarTrigger>
-          <MenubarContent>
-            <MenubarItem>
-              New Tab <MenubarShortcut>⌘T</MenubarShortcut>
-            </MenubarItem>
-            <MenubarItem>New Window</MenubarItem>
-            <MenubarSeparator />
-            <MenubarItem>Share</MenubarItem>
-            <MenubarSeparator />
-            <MenubarItem>Print</MenubarItem>
-          </MenubarContent>
-        </MenubarMenu>
-      </Menubar>
+      <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">          
+        <Menubar className="rounded-none border-b border-none px-2 lg:px-4">
+          <MenubarMenu>
+            <MenubarTrigger>
+              <Link href="/dashboard" >Dashboard</Link>
+            </MenubarTrigger>
+          </MenubarMenu>
+
+          <MenubarMenu>
+            <MenubarTrigger>Sales</MenubarTrigger>
+            <MenubarContent>
+              <MenubarItem>
+              <Link href="/sales/invoice">Sales Invoice</Link>
+              </MenubarItem>
+            </MenubarContent>
+          </MenubarMenu>
+
+          <MenubarMenu>
+            <MenubarTrigger>Purchases</MenubarTrigger>
+            <MenubarContent>
+              <MenubarItem>
+              <Link href="/purchases/invoice">Purchase Invoice</Link>
+              </MenubarItem>
+            </MenubarContent>
+          </MenubarMenu>
+
+          <MenubarMenu>
+            <MenubarTrigger>
+              <Link href="/inventory" >Inventory</Link>
+            </MenubarTrigger>
+          </MenubarMenu>
+
+          <MenubarMenu>
+            <MenubarTrigger>
+              <Link href="/parties">Parties</Link>
+            </MenubarTrigger>
+          </MenubarMenu>
+
+          <MenubarMenu>
+            <MenubarTrigger>
+              <Link href="/settings">Settings</Link>
+            </MenubarTrigger>
+          </MenubarMenu>
+
+        </Menubar>
+      </nav>
 
       <Sheet>
         <SheetTrigger asChild>
@@ -114,35 +97,21 @@ export function MainNav({
               className="flex items-center gap-2 text-lg font-semibold"
             >
               <Package2 className="h-6 w-6" />
-              <span className="sr-only">Acme Inc</span>
             </Link>
-            <Link href="#" className="hover:text-foreground">
+            <Link href="/dashboard" className="hover:text-foreground">
               Dashboard
             </Link>
             <Link
-              href="#"
+              href="/sales/invoice"
               className="text-muted-foreground hover:text-foreground"
             >
-              Orders
+              Sales Invoice
             </Link>
-            <Link
-              href="#"
-              className="text-muted-foreground hover:text-foreground"
-            >
-              Products
-            </Link>
-            <Link
-              href="#"
-              className="text-muted-foreground hover:text-foreground"
-            >
-              Customers
-            </Link>
-            <Link
-              href="#"
-              className="text-muted-foreground hover:text-foreground"
-            >
-              Analytics
-            </Link>
+            <Link className="text-muted-foreground hover:text-foreground" href="/purchases/invoice">Purchase Invoice</Link>
+            <Link className="text-muted-foreground hover:text-foreground" href="/inventory" >Inventory</Link>
+            <Link className="text-muted-foreground hover:text-foreground" href="/parties">Parties</Link>
+            <Link className="text-muted-foreground hover:text-foreground" href="/settings">Settings</Link>
+
           </nav>
         </SheetContent>
       </Sheet>
@@ -152,7 +121,7 @@ export function MainNav({
             <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
             <Input
               type="search"
-              placeholder="Search products..."
+              placeholder="Search Products..."
               className="pl-8 sm:w-[300px] md:w-[200px] lg:w-[300px]"
             />
           </div>
@@ -165,12 +134,14 @@ export function MainNav({
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuLabel>My Account</DropdownMenuLabel>
+            <DropdownMenuLabel>{session?.data?.user?.name || "My Account"}</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem>Settings</DropdownMenuItem>
             <DropdownMenuItem>Support</DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Logout</DropdownMenuItem>
+            <DropdownMenuItem onClick={signOut}>
+              Logout
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
