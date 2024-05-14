@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import CustomFormField from "@/app/(components)/CustomFormField";
 import { CustomBreadcrumb } from "@/app/(components)/CustomBreadcrumb";
-import { productTax } from "@/common/constants";
+import { productCategories, productTax, productUnits } from "@/common/constants";
 
 const FormSchema = z.object({
   id: z.string().min(2),
@@ -36,6 +36,7 @@ export default function AddProduct() {
   });
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
+    console.log(data, 'AAAAAAAA - data')
     // Handle form submission
   }
 
@@ -86,7 +87,7 @@ export default function AddProduct() {
               form={form}
               name="unit"
               label="Unit"
-              options={[]}
+              options={productUnits}
             />
             <CustomFormField
               type="select"
@@ -107,11 +108,7 @@ export default function AddProduct() {
               form={form}
               name="category"
               label="Category"
-              options={[
-                { label: "m@example7.com", value: "m@example7.com" },
-                { label: "m@example8.com", value: "m@example8.com" },
-                { label: "m@example9.com", value: "m@example9.com" },
-              ]}
+              options={productCategories}
             />
           </div>
           <Button type="submit">Submit</Button>
