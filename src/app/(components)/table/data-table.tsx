@@ -27,6 +27,7 @@ import {
 
 import { DataTablePagination } from "./data-table-pagination"
 import { DataTableToolbar } from "./data-table-toolbar"
+import { Cross2Icon } from "@radix-ui/react-icons";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -150,7 +151,7 @@ function TableBodyRow<TData>({ row, onRowDelete }: TableBodyRowProps<TData>): JS
   const handleMouseLeave = () => {
     setIsHovered(false);
   };
-  console.log(row.getVisibleCells(), "AAAAAAAA--- row")
+
   return (
     <TableRow
       key={row.id}
@@ -162,7 +163,9 @@ function TableBodyRow<TData>({ row, onRowDelete }: TableBodyRowProps<TData>): JS
         if (cell?.column?.id === "index" && isHovered) {
           return (
             <td className="align-middle" key={cell.id}>
-              <button className="ml-4" onClick={() => onRowDelete(row)}>X</button>
+              <button className="ml-4" onClick={() => onRowDelete(row)}>
+              <Cross2Icon className="h-4 w-4 colo" />
+              </button>
             </td>
           );
         } else {

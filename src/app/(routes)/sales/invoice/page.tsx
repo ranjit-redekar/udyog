@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Filter from "@/app/(components)/Filter";
 import { DataTable } from "@/app/(components)/table/data-table";
 import { columns } from "./columns";
+import { format } from "date-fns";
 
 export default function TaskPage() {
   const [data, setData] = useState<any[]>([]);
@@ -13,7 +14,8 @@ export default function TaskPage() {
   useEffect(() => {
     const fetchData = async () => {
       const res = await getInvoice();
-      setData(res);
+      console.log(res, "Invoice data")
+      setData(res.map((ele) => ({...ele, invoiceDate: format(ele?.invoiceDate, "PPpp")})));
     };
     fetchData();
   }, []);

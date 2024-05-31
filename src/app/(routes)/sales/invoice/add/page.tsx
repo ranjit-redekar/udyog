@@ -122,6 +122,7 @@ export default function InputForm() {
             <Button
               className="text-xs"
               variant="secondary"
+              size={"sm"}
               onClick={() => {
                 setData([...data, ...makeData(1)]);
               }}

@@ -32,13 +32,11 @@ export const columns: ColumnDef<Invoice>[] = [
   {
     header: "#",
     accessorKey: "index",
-    // footer: (props) => props.column.id,
-    cell: ({ row }) => (<div className="ml-4" >{row?.index + 1}</div>),
+    cell: ({ row }) => (<div className="ml-4 text-gray-500" >{row?.index + 1}</div>),
   },
   {
     header: "Product",
     accessorKey: "product",
-    // footer: (props) => props.column.id,
     cell: ({ row }) => (
       <div>
         <ComboBox options={optionsData} btnclsss="border border-transparent" />
@@ -50,7 +48,7 @@ export const columns: ColumnDef<Invoice>[] = [
     accessorKey: "quantity",
     cell: ({ row }) => (
       <div className="max-w-24">
-        <Input type="number" />
+        <Input type="number" className="focus-visible:border-none focus-visible:ring-0 border-none rounded-none"/>
       </div>
     ),
   },
@@ -59,17 +57,17 @@ export const columns: ColumnDef<Invoice>[] = [
     header: () => "Rate",
     cell: ({ row }) => (
       <div className="max-w-40">
-        <Input type="number" />
+        <Input type="number" className="focus-visible:border-none focus-visible:ring-0 border-none rounded-none"/>
       </div>
     ),
   },
   {
     accessorKey: "tax",
-    header: () => <span>Tax</span>,
+    header: () => "Tax",
     cell: ({ row }) => (
       <div className="max-w-60">
         <Select>
-          <SelectTrigger className="w-[180px]">
+          <SelectTrigger className="w-[180px] focus:ring-0 border-none rounded-none">
             <SelectValue className="placeholder:text-gray-500" placeholder="Tax(%)" />
           </SelectTrigger>
           <SelectContent>

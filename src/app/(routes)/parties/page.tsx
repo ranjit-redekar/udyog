@@ -1,22 +1,42 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { UserBasicForm } from "./adduser";
 
-export default function page() {
+const tabData = [
+  { id: 'Customer', label: 'Customers', content: 'Customer List.' },
+  { id: 'Supplier', label: 'Suppliers', content: 'Supplier List.' },
+  { id: 'both', label: 'Both', content: 'Both here.' },
+];
+
+export default function Parties() {
+  const router = useRouter();
+  const [selectedTab, setSelectedTab] = useState<string>('Customer');
+
   return (
     <div>
-      <Tabs defaultValue="customers" className="w-[400px]">
-        <TabsList>
-          <TabsTrigger value="customers">Customers</TabsTrigger>
-          <TabsTrigger value="suppliers">Suppliers</TabsTrigger>
-          <TabsTrigger value="both">Both</TabsTrigger>
-        </TabsList>
-        <TabsContent value="customers">
-          Customer List.
+      <div className="flex justify-between">
+      <Tabs defaultValue={selectedTab} className="w-[400px]">
+      <TabsList>
+        {tabData.map(tab => (
+          <TabsTrigger
+            key={tab.id}
+            value={tab.id}
+            onClick={() => setSelectedTab(tab.id)}
+          >
+            {tab.label}
+          </TabsTrigger>
+        ))}
+      </TabsList>
+      {tabData.map(tab => (
+        <TabsContent key={tab.id} value={tab.id}>
+          {tab.content}
         </TabsContent>
-        <TabsContent value="suppliers">Supplier List.</TabsContent>
-        <TabsContent value="both">Both here.</TabsContent>
-      </Tabs>
+      ))}
+    </Tabs>
+      <UserBasicForm title={selectedTab === 'both' ? 'User' : selectedTab} />
+      </div>
     </div>
   );
 }
