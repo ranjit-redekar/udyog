@@ -8,6 +8,7 @@ import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import CustomFormField from "@/app/(components)/CustomFormField";
+import { customerType } from "@/common/constants";
 
 const breadcrumbData = [
   {
@@ -39,7 +40,6 @@ export default function UserMoreDetails() {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      id: "",
       name: "",
       unit: "",
       hsn: "",
@@ -64,9 +64,59 @@ export default function UserMoreDetails() {
             <CustomFormField
               type="input"
               form={form}
-              name="id"
-              label="Product ID"
-              placeholder="shadcn"
+              name="full_name"
+              label="Full Name"
+              placeholder="Full Name"
+            />
+            <CustomFormField
+              type="select"
+              form={form}
+              name="type"
+              label="Customer Type"
+              placeholder="Select Customer Type"
+              options={customerType}
+            />
+            <CustomFormField
+              type="number"
+              form={form}
+              name="mobile_number"
+              label="Mobile Number"
+              placeholder="Mobile Number"
+            />
+            <CustomFormField
+              type="email"
+              form={form}
+              name="email"
+              label="Email"
+              placeholder="Email"
+            />
+            <CustomFormField
+              type="text"
+              form={form}
+              name="organisation"
+              label="Organisation"
+              placeholder="Organisation"
+            />
+            <CustomFormField
+              type="text"
+              form={form}
+              name="role"
+              label="Role/Designation"
+              placeholder="Role/Designation"
+            />
+            <CustomFormField
+              type="text"
+              form={form}
+              name="reporting_to"
+              label="Reporting To"
+              placeholder="Reporting Contact"
+            />
+            <CustomFormField
+              type="text"
+              form={form}
+              name="reporting_to"
+              label="Reporting To"
+              placeholder="Reporting Contact"
             />
           </div>
         </form>

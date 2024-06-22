@@ -20,10 +20,26 @@ import {
 } from "@/components/ui/drawer";
 import { PlusCircledIcon } from "@radix-ui/react-icons";
 import UserForm from "./UserForm";
+import { toast } from "react-toastify";
+import { createUser } from "@/actions";
 
 export function UserBasicForm({ title }) {
   const [open, setOpen] = React.useState(false);
   const isDesktop = useMediaQuery("(min-width: 768px)");
+
+  const onSubmit = async (data) => {
+    // Store user data to Database
+    try {
+      const user = await createUser(data) 
+      console.log(user, "User")
+      toast.success("User created successfully!")
+      setOpen(false)
+    } catch (err) {
+      console.dir(err , 'AAAAAA -Error ')
+      const msg = err?.message ? err?.message : "Something went wrong."
+      toast.error(`Error: ${msg}`)
+    }
+  }
 
   if (isDesktop) {
     return (
@@ -38,7 +54,7 @@ export function UserBasicForm({ title }) {
           <DialogHeader>
             <DialogTitle>{`Add ${title || 'User'}`}</DialogTitle>
           </DialogHeader>
-          <UserForm title={title} />
+          <UserForm title={title} onSubmit={onSubmit} />
         </DialogContent>
       </Dialog>
     );
@@ -56,7 +72,7 @@ export function UserBasicForm({ title }) {
         <DrawerHeader className="text-left">
           <DrawerTitle>{`Add ${title || 'User'}`}</DrawerTitle>
         </DrawerHeader>
-        <UserForm title={title} />
+        <UserForm title={title} onSubmit={onSubmit} />
         <DrawerFooter className="pt-2">
           <DrawerClose asChild>
             <Button variant="outline">Cancel</Button>

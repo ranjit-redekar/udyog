@@ -59,3 +59,9 @@ export const productCategories = [
   { label: "Tools & Hardware", value: "tools_and_hardware" }, // Use underscores for compound values
   // You can add more categories as needed
 ];
+
+export const customerType = [
+  {label: "Customer", value: "customer"},
+  {label: "Supplier", value: "supplier"},
+  {label: "Both", value: "both"},
+]

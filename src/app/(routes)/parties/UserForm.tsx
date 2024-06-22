@@ -1,4 +1,4 @@
-"use client";
+// "use client";
 import * as React from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -10,71 +10,64 @@ import { Form } from "@/components/ui/form";
 import CustomFormField from "@/app/(components)/CustomFormField";
 import { Pencil2Icon } from "@radix-ui/react-icons";
 import { useRouter } from "next/navigation";
+import { customerType } from "@/common/constants";
+import { createUser } from "@/actions";
+import { toast } from "react-toastify";
 
 const FormSchema = z.object({
-  id: z.string().min(2),
-  name: z.string(),
-  unit: z.string(),
-  hsn: z.string(),
-  tax_rate: z.string(),
-  selling_price: z.string(),
-  category: z.string(),
-  description: z.string(),
+  full_name: z.string(),
+  type: z.string(),
+  mobile_number: z.string(),
+  email: z.string()
 });
 
-export default function UserForm({ title }: React.ComponentProps<"form">) {
+export default function UserForm({ title, onSubmit }: React.ComponentProps<"form">) {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      id: "",
-      name: "",
-      unit: "",
-      hsn: "",
-      tax_rate: "",
-      selling_price: "",
-      category: "",
-      description: "",
+      full_name: undefined,
+      type: undefined,
+      mobile_number: undefined,
+      email: ""
     },
   });
 
   const router = useRouter();
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
+  async function handleOnSubmit(data: z.infer<typeof FormSchema>) {
     console.log(data, "AAAAAAAA - data");
-    // Handle form submission
+    onSubmit(data);
   }
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
+      <form onSubmit={form.handleSubmit(handleOnSubmit)}>
         <div className="grid grid-cols-2 gap-4 pb-4">
           <CustomFormField
             form={form}
-            name="fullname"
+            name="full_name"
             label="Full Name"
             placeholder="Full Name"
           />
           <CustomFormField
             form={form}
             type="select"
-            options={[]}
-            name="usertype"
+            options={customerType}
+            name="type"
             label={`${title || 'User'} Type`}
             placeholder="Select"
           />
           <CustomFormField
             form={form}
             type="number"
-            options={[]}
-            name="mobilenumber"
+            name="mobile_number"
             label="Mobile Number"
             placeholder="Mobile Number"
           />
           <CustomFormField
             form={form}
             type="email"
-            options={[]}
-            name="emailid"
+            name="email"
             label="Email Id"
             placeholder="Email Id"
           />
