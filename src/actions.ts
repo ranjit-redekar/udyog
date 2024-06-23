@@ -8,3 +8,13 @@ export async function createUser(data:any) {
         data: { ...data }
     })
 }
+
+export async function getUsers(type?:string) {
+    console.log(type, "AAAAAA - Data")
+    if (type === 'both') {
+        return prisma.user.findMany();        
+    }
+    return prisma.user.findMany({
+        where: { type }
+    });
+}

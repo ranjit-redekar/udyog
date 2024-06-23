@@ -28,6 +28,7 @@ import {
   MenubarTrigger,
 } from "@/components/ui/menubar";
 import { signOut } from "next-auth/react";
+import { ThemeButton } from "./Theme-button";
 
 export function MainNav({
   className,
@@ -126,6 +127,7 @@ export function MainNav({
             />
           </div>
         </form>
+        <ThemeButton />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="secondary" size="icon" className="rounded-full">
