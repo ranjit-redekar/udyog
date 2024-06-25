@@ -8,16 +8,16 @@ import { DataTableRowActions } from "../../(components)/table/data-table-row-act
 import ComboBox from "@/app/(components)/combobox"
 
 export const columns: ColumnDef= [
+  // {
+  //   accessorKey: "id",
+  //   header: ({ column }) => (
+  //     <DataTableColumnHeader column={column} title="ID" />
+  //   ),
+  //   enableSorting: false,
+  //   enableHiding: false,
+  // },
   {
-    accessorKey: "id",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="ID" />
-    ),
-    enableSorting: false,
-    enableHiding: false,
-  },
-  {
-    accessorKey: "product_name",
+    accessorKey: "name",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Product Name" />
     ),
@@ -62,15 +62,15 @@ export const columns: ColumnDef= [
     ),
   },
   {
-    accessorKey: "selling_price",
+    accessorKey: "price",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Selling Price" />
+      <DataTableColumnHeader column={column} title="Price" />
     ),
   },
   {
-    accessorKey: "group",
+    accessorKey: "category",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Group" />
+      <DataTableColumnHeader column={column} title="category" />
     ),
   },
   {

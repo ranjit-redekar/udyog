@@ -26,3 +26,20 @@ model User {
   updatedAt DateTime @updatedAt
   createdAt DateTime @default(now())
 }
+
+model Product {
+  id  String @id @default(cuid())
+  name String
+  price String
+  unit String 
+  tax_rate String
+  category String
+  
+  status Boolean?
+  hsn String? @unique
+  brand String?
+  description String?
+  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+}
+

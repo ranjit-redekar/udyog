@@ -10,15 +10,15 @@ import { CustomBreadcrumb } from "@/app/(components)/CustomBreadcrumb";
 import { productCategories, productTax, productUnits } from "@/common/constants";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useState } from "react";
+import { createProduct } from "@/actions";
 
 const FormSchema = z.object({
-  id: z.string().min(2),
   name: z.string(),
+  price: z.string(),
   unit: z.string(),
-  hsn: z.string(),
   tax_rate: z.string(),
-  selling_price: z.string(),
   category: z.string(),
+  hsn: z.string(),
   description: z.string(),
 });
 
@@ -27,20 +27,24 @@ export default function AddProduct() {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      id: "",
       name: "",
+      price: "",
       unit: "",
-      hsn: "",
       tax_rate: "",
-      selling_price: "",
       category: "",
+      hsn: "",
       description: "",
     },
   });
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
+  const onSubmit = async(data: z.infer<typeof FormSchema>) => {
     console.log(data, 'AAAAAAAA - data')
-    // Handle form submission
+    try {
+      const res = await createProduct(data);
+      console.log(res, "Product created successfully!")
+    } catch (err) {
+      console.log(err, "Error while creating product")
+    }
   }
 
   return (
@@ -63,8 +67,8 @@ export default function AddProduct() {
       />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="p-4">
-          <Tabs defaultValue={selectedTab} >
-            <TabsList>
+          {/* <Tabs defaultValue={selectedTab} > */}
+            {/* <TabsList>
               <TabsTrigger
                 defaultValue={selectedTab} value="basic"
                 onClick={() => setSelectedTab("basic")} >
@@ -75,8 +79,8 @@ export default function AddProduct() {
                 onClick={() => setSelectedTab("more")} >
                 More Details
               </TabsTrigger>
-            </TabsList>
-            <TabsContent value="basic">
+            </TabsList> */}
+            {/* <TabsContent value="basic"> */}
               <div className="grid grid-cols-3 gap-4 pb-4">
                 <CustomFormField
                   type="input"
@@ -88,9 +92,9 @@ export default function AddProduct() {
                 <CustomFormField
                   type="input"
                   form={form}
-                  name="hsn"
-                  label="Product HSN Code"
-                  placeholder="shadcn"
+                  name="price"
+                  label="Price"
+                  placeholder="Price"
                 />
                 <CustomFormField
                   type="select"
@@ -113,10 +117,24 @@ export default function AddProduct() {
                   label="Category"
                   options={productCategories}
                 />
+                <CustomFormField
+                  type="input"
+                  form={form}
+                  name="hsn"
+                  label="HSN Code"
+                  placeholder="shadcn"
+                />
+                <CustomFormField
+                  type="input"
+                  form={form}
+                  name="description"
+                  label="Description"
+                  placeholder="Product details"
+                />
               </div>
-            </TabsContent>
-            <TabsContent value="more" >
-              <div className="grid grid-cols-3 gap-4 pb-4">
+            {/* </TabsContent>
+            <TabsContent value="more" > */}
+              {/* <div className="grid grid-cols-3 gap-4 pb-4">
                 <CustomFormField
                   type="input"
                   form={form}
@@ -124,9 +142,9 @@ export default function AddProduct() {
                   label="Product ID"
                   placeholder="shadcn"
                 />
-              </div>
-            </TabsContent>
-          </Tabs>
+              </div> */}
+            {/* </TabsContent>
+          </Tabs> */}
           <Button type="submit">Submit</Button>
         </form>
     </Form >

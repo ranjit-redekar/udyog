@@ -18,3 +18,14 @@ export async function getUsers(type?:string) {
         where: { type }
     });
 }
+
+export async function createProduct(data:any) {
+    console.log(data)
+    return prisma.product.create({
+        data: { ...data }
+    })
+}
+
+export async function getProducts(type?:string) {
+    return prisma.product.findMany();
+}
