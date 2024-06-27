@@ -11,6 +11,7 @@ import { productCategories, productTax, productUnits } from "@/common/constants"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useState } from "react";
 import { createProduct } from "@/actions";
+import { useRouter } from 'next/navigation'
 
 const FormSchema = z.object({
   name: z.string(),
@@ -23,6 +24,7 @@ const FormSchema = z.object({
 });
 
 export default function AddProduct() {
+  const router = useRouter()
   const [selectedTab, setSelectedTab] = useState('basic');
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -145,7 +147,10 @@ export default function AddProduct() {
               </div> */}
             {/* </TabsContent>
           </Tabs> */}
-          <Button type="submit">Submit</Button>
+          <div className="flex gap-2" >
+            <Button type="button" variant="destructive" onClick={() => router.push('/inventory')} >Cancel</Button>
+            <Button type="submit">Save</Button>
+          </div>
         </form>
     </Form >
     </>
